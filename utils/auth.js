@@ -47,3 +47,10 @@ export const setToken = ({access_token, id_token, expires_in}) => {
   localStorage.setItem('expiresAt', expires_in * 1000 + new Date().getTime())
   localStorage.setItem('user', JSON.stringify(jwtDecode(id_token)))
 }
+
+export const isAuthenticated = () => {
+  const expiresAt = localStorage.getItem('expiresAt')
+  console.log(new Date().getTime())
+  console.log(expiresAt)
+  return new Date().getTime() < expiresAt
+}
