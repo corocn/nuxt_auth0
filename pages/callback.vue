@@ -7,6 +7,7 @@
   export default {
     mounted () {
       setToken(getQueryParams())
+      this.$router.replace('/')
     }
   }
 </script>
