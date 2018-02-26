@@ -38,4 +38,7 @@ module.exports = {
     }
   },
   mode: 'spa',
+  generate: {
+    dir: '../public'
+  }
 }
