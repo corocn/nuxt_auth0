@@ -50,7 +50,13 @@ export const setToken = ({access_token, id_token, expires_in}) => {
 
 export const isAuthenticated = () => {
   const expiresAt = localStorage.getItem('expiresAt')
-  console.log(new Date().getTime())
-  console.log(expiresAt)
   return new Date().getTime() < expiresAt
+}
+
+export const unsetToken = () => {
+  const localStorage = window.localStorage
+  localStorage.removeItem('accessToken')
+  localStorage.removeItem('idToken')
+  localStorage.removeItem('expiresAt')
+  localStorage.removeItem('user')
 }
