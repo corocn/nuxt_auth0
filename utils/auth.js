@@ -1,4 +1,5 @@
 import Auth0Lock from 'auth0-lock'
+import jwtDecode from 'jwt-decode'
 
 const config = {
   clientID: 'bWSCL499LksS6Zf9wWyFUFjvwA0vkQoj',
@@ -29,4 +30,20 @@ export const showLock = (container) => {
 
 const getBaseUrl = () => {
   return `${window.location.protocol}//${window.location.host}`
+}
+
+export const getQueryParams = () => {
+  const params = {}
+  window.location.href.replace(/([^(?|#)=&]+)(=([^&]*))?/g, ($0, $1, $2, $3) => {
+    params[$1] = $3
+  })
+  return params
+}
+
+export const setToken = ({access_token, id_token, expires_in}) => {
+  const localStorage = window.localStorage
+  localStorage.setItem('accessToken', access_token)
+  localStorage.setItem('idToken', id_token)
+  localStorage.setItem('expiresAt', expires_in * 1000 + new Date().getTime())
+  localStorage.setItem('user', JSON.stringify(jwtDecode(id_token)))
 }
