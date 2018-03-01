@@ -60,3 +60,7 @@ export const unsetToken = () => {
   localStorage.removeItem('expiresAt')
   localStorage.removeItem('user')
 }
+
+export const getIdToken = () => isAuthenticated() ? localStorage.getItem('idToken') : null
+export const getAccessToken = () => isAuthenticated() ? localStorage.getItem('accessToken') : null
+export const getUser = () => isAuthenticated() ? localStorage.getItem('user') : null

@@ -23,13 +23,14 @@
       </div>
 
       <button class="button is-primary" @click="ping">Ping</button>
+      <button class="button is-danger" @click="securedPing">Secured Ping</button>
     </div>
   </section>
 </template>
 
 <script>
 import AppLogo from '~/components/AppLogo.vue'
-import { isAuthenticated } from '~/utils/auth'
+import { isAuthenticated, getIdToken } from '~/utils/auth'
 
 export default {
   components: {
@@ -39,6 +40,11 @@ export default {
     loggedIn() { return isAuthenticated() },
     async ping() {
       const ret = await this.$axios.$get('/api/v1/ping')
+      console.log(ret)
+    },
+    async securedPing() {
+      const ret = await this.$axios.$get('/api/v1/secured_ping',
+        { headers: { Authorization: 'Bearer ' + getIdToken() }})
       console.log(ret)
     }
   }
