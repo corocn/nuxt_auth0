@@ -16,3 +16,5 @@
 .byebug_history
 
 /public/*
+
+.env
