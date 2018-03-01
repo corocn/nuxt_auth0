@@ -13,6 +13,7 @@
           <span>Logout</span>
         </nuxt-link>
       </div>
+
       <div v-if="!loggedIn()" class="content">
         <h2>ログインしてください</h2>
         <nuxt-link class="button is-primary" to="/login">
@@ -21,6 +22,7 @@
         </nuxt-link>
       </div>
 
+      <button class="button is-primary" @click="ping">Ping</button>
     </div>
   </section>
 </template>
@@ -34,7 +36,11 @@ export default {
     AppLogo
   },
   methods: {
-    loggedIn() { return isAuthenticated() }
+    loggedIn() { return isAuthenticated() },
+    async ping() {
+      const ret = await this.$axios.$get('/api/v1/ping')
+      console.log(ret)
+    }
   }
 }
 </script>
