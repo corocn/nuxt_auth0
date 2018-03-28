@@ -13,7 +13,13 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
-    "nuxt": "^1.4.0"
+    "@nuxtjs/vuetify": "^0.4.1",
+    "auth0-lock": "^11.5.1",
+    "jwt-decode": "^2.2.0",
+    "nuxt": "^1.4.0",
+    "pug": "^2.0.3",
+    "pug-loader": "^2.3.0",
+    "query-string": "^6.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
