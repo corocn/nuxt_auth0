@@ -1,4 +1,4 @@
-const config = {
+module.exports = {
   /*
   ** Headers of the page
   */
@@ -10,9 +10,7 @@ const config = {
       { hid: 'description', name: 'description', content: 'Nuxt.js project' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' },
-      { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
   /*
@@ -35,25 +33,6 @@ const config = {
           exclude: /(node_modules)/
         })
       }
-
-
     }
-  },
-  mode: 'spa',
-  generate: {
-    dir: '../public'
-  },
-  modules: [
-    '@nuxtjs/axios',
-    '@nuxtjs/proxy'
-  ],
-}
-
-if (process.env.NODE_ENV === 'development') {
-  config.proxy = {
-    '/api': 'http://localhost:3000'
   }
 }
-
-
-module.exports = config
