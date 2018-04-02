@@ -7,14 +7,21 @@ const config = {
   domain: 'nuxt-auth0.auth0.com'
 }
 
+const UPDATE_BEFORE_MINUTES = 5
+
 class Auth0Util {
-  showLock(container) {
-    const lock = new Auth0Lock(
+  constructor(context) {
+    this.context = context
+  }
+
+  getLock(container) {
+    return new Auth0Lock(
       config.clientID,
       config.domain,
       {
         container,
         closable: false,
+        rememberLastLogin: false,
         auth: {
           responseType: 'token id_token',
           redirectUrl: this.getBaseUrl() + '/user/callback',
@@ -22,19 +29,40 @@ class Auth0Util {
             scope: 'openid profile email'
           }
         }
-      })
+      });
+  }
 
-    lock.show()
-    // lock.checkSession({}, function (error, authResult) {
-    //   if (error || !authResult) {
-    //     lock.show();
-    //   } else {
-    //     console.log(authResult);
-    //     lock.getUserInfo(authResult.accessToken, function (error, profile) {
-    //       console.log(error, profile);
-    //     });
-    //   }
-    // });
+  showLock(container) {
+    this.getLock(container).show();
+  }
+
+  updateTokensIfNecessary() {
+    if (new Date().getTime() < (+this.getExpiresAt() - (UPDATE_BEFORE_MINUTES * 60 * 1000))) {
+      return
+    }
+
+    const lock = this.getLock();
+
+    lock.checkSession({scope: 'openid profile email'}, (error, authResult) => {
+      if (error || !authResult) {
+        lock.show()
+      } else {
+        const {accessToken, idToken, expiresIn} = authResult
+
+        this.setToken({
+          access_token: accessToken,
+          id_token: idToken,
+          expires_in: expiresIn
+        });
+
+        console.log('TOKEN UPDATED')
+      }
+    })
+  }
+
+  logout() {
+    this.unsetToken();
+    this.getLock().logout({ returnTo: '/'})
   }
 
   getBaseUrl() {
@@ -53,7 +81,7 @@ class Auth0Util {
   }
 
   setTokenByQuery() {
-    this.setToken(this.getQueryParams());
+    this.setToken(this.getQueryParams())
   }
 
   isAuthenticated() {
@@ -68,11 +96,23 @@ class Auth0Util {
     window.localStorage.removeItem('user')
   }
 
-  getIdToken() { return this.isAuthenticated() ? localStorage.getItem('idToken') : null }
-  getAccessToken() { return this.isAuthenticated() ? localStorage.getItem('idToken') : null }
-  getUser() { return this.isAuthenticated() ? JSON.parse(localStorage.getItem('user')) : null }
+  getExpiresAt() {
+    return localStorage.getItem('expiresAt')
+  }
+
+  getIdToken() {
+    return this.isAuthenticated() ? localStorage.getItem('idToken') : null
+  }
+
+  getAccessToken() {
+    return this.isAuthenticated() ? localStorage.getItem('accessToken') : null
+  }
+
+  getUser() {
+    return this.isAuthenticated() ? JSON.parse(localStorage.getItem('user')) : null
+  }
 }
 
 export default (context, inject) => {
-  inject('auth0', new Auth0Util);
+  inject('auth0', new Auth0Util(context));
 }

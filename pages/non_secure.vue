@@ -1,6 +1,6 @@
 <template lang="pug">
   p
-    | Non-Secure Page
+    | Here is non-secured
 </template>
 
 <script>

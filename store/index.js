@@ -5,12 +5,12 @@ const store = () => new Vuex.Store({
     user: 0
   },
   mutations: {
-    setUser(state, user) {
+    setUser (state, user) {
       state.user = (user === null) ? null : { ...user }
     }
   },
   getters: {
-    user(state) {
+    user (state) {
       return state.user
     }
   }

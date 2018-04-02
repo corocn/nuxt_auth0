@@ -14,7 +14,7 @@
 <script>
   export default {
     props: {
-      user: {type: Object, default: null}
+      user: {type: [Object, Number], default: null}
     }
   }
 </script>

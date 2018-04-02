@@ -38,5 +38,8 @@ module.exports = {
       }
     }
   },
-  plugins: ['~/plugins/auth0.js']
+  plugins: ['~/plugins/auth0.js'],
+  router: {
+    middleware: ['loginUser']
+  }
 }

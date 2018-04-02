@@ -1,11 +1,11 @@
 <template lang="pug">
-.id(id="show-auth")
+div(id="show-lock")
 </template>
 
 <script>
 export default {
   mounted() {
-    this.$auth0.showLock("show-auth");
+    this.$auth0.showLock('show-lock');
   }
 };
 </script>
