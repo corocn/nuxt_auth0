@@ -1,22 +1,46 @@
-# nuxt-auth0
+# Nuxt-Auth0
 
-> Nuxt.js project
+This is a example of Auth0 integration with Nuxt.js
 
-## Build Setup
+## Features
 
-``` bash
-# install dependencies
-$ npm install # Or yarn install
+ - Using Auth0 Lock
+ - Update tokens with checkSession method
+ - Secure / Non-Secure Pages with middleware
+ - Showing User from JSON Web Token
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+## Demo
 
-# build for production and launch server
-$ npm run build
-$ npm start
+![demo](https://user-images.githubusercontent.com/1762675/38202765-dc4ba364-36d7-11e8-85e2-ed0ef38ee819.gif)
 
-# generate static project
-$ npm run generate
+## Setup
+
+### Auth0
+
+https://auth0.com/
+
+Need to create a auth0 tenant and make some settings below.
+
+ - Allowed Callback URLs: http://localhost:3000/user/callback
+ - Allowed Web Origins: http://localhost:3000
+ - Allowed Logout URLs: http://localhost:3000
+
+
+### .env
+
+Using dotenv.
+create .env and set clientID and domain.
+
+```
+AUTH0_CLIENT_ID=YOUR_CLIENT_ID
+AUTH0_DOMAIN=YOUR_DOMAIN
 ```
 
-For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
+## Start
+
+Let's start with Nuxt.js build commands.
+
+``` bash
+$ yarn install
+$ yarn dev
+```
