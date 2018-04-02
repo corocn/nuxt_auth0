@@ -41,5 +41,10 @@ module.exports = {
   plugins: ['~/plugins/auth0.js'],
   router: {
     middleware: ['loginUser']
+  },
+  auth0: {
+    clientID: 'bWSCL499LksS6Zf9wWyFUFjvwA0vkQoj',
+    domain: 'nuxt-auth0.auth0.com',
+    updateSessionMinutes: 5
   }
 }

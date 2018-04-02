@@ -1,13 +1,9 @@
 import Auth0Lock from 'auth0-lock'
 import jwtDecode from 'jwt-decode'
 import queryString from 'query-string'
+const config = require('../nuxt.config.js')
 
-const config = {
-  clientID: 'bWSCL499LksS6Zf9wWyFUFjvwA0vkQoj',
-  domain: 'nuxt-auth0.auth0.com'
-}
-
-const UPDATE_BEFORE_MINUTES = 5
+const UPDATE_SESSION_MINUTES = config.auth0.updateSessionMinutes || 5
 
 class Auth0Util {
   constructor(context) {
@@ -16,8 +12,8 @@ class Auth0Util {
 
   getLock(container) {
     return new Auth0Lock(
-      config.clientID,
-      config.domain,
+      config.auth0.clientID,
+      config.auth0.domain,
       {
         container,
         closable: false,
@@ -37,7 +33,7 @@ class Auth0Util {
   }
 
   updateTokensIfNecessary() {
-    if (new Date().getTime() < (+this.getExpiresAt() - (UPDATE_BEFORE_MINUTES * 60 * 1000))) {
+    if (new Date().getTime() < (+this.getExpiresAt() - (UPDATE_SESSION_MINUTES * 60 * 1000))) {
       return
     }
 
