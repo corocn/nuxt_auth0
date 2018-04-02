@@ -1,5 +1,10 @@
+require('dotenv').config()
+
 module.exports = {
   mode: 'spa',
+  modules: [
+    '@nuxtjs/dotenv'
+  ],
   /*
   ** Headers of the page
   */
@@ -28,6 +33,10 @@ module.exports = {
     ** Run ESLint on save
     */
     extend (config, { isDev, isClient }) {
+      config.node = {
+        fs: 'empty'
+      }
+
       if (isDev && isClient) {
         config.module.rules.push({
           enforce: 'pre',
@@ -43,8 +52,8 @@ module.exports = {
     middleware: ['loginUser']
   },
   auth0: {
-    clientID: 'bWSCL499LksS6Zf9wWyFUFjvwA0vkQoj',
-    domain: 'nuxt-auth0.auth0.com',
+    clientID: process.env.AUTH0_CLIENT_ID,
+    domain: process.env.AUTH0_DOMAIN,
     updateSessionMinutes: 5
   }
 }
